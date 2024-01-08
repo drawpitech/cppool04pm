@@ -20,7 +20,6 @@ bool init_tree(tree_t **tree_ptr, void *data)
     if (*tree_ptr)
         return false;
     **tree_ptr = (tree_t){
-        .parent = NULL,
         .data = data,
         .children = NULL,
     };
@@ -35,7 +34,6 @@ tree_t *tree_add_child(tree_t *node, void *data)
         return NULL;
     if (init_tree(&new, data))
         return NULL;
-    new->parent = node;
     if (list_add_elem_at_back(&(new->children), new))
         free(new);
     return new;
