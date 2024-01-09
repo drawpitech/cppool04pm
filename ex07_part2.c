@@ -57,8 +57,10 @@ bool map_del_elem(map_t **map_ptr, void *key, key_comparator_t key_cmp)
 
     while (*map_ptr != NULL) {
         pair = (*map_ptr)->value;
-        if (key_cmp(pair->key, key) == 0)
+        if (pair != NULL && key_cmp(pair->key, key) == 0) {
+            free(pair);
             return list_del_elem_at_front(map_ptr);
+        }
         map_ptr = &(*map_ptr)->next;
     }
     return false;
