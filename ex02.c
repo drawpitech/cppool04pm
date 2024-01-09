@@ -27,7 +27,7 @@ int int_list_get_elem_at_position(int_list_t *list, unsigned int position)
 {
     if (list == NULL)
         return 0;
-    while (position > 0 && list != NULL)
+    for (; position && list != NULL; position--)
         list = list->next;
     return (list == NULL) ? 0 : list->value;
 }
