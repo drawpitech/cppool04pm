@@ -11,25 +11,25 @@
 
 void *list_get_elem_at_front(list_t *list)
 {
-    return (list == NULL) ? NULL : list->value;
+    return (list == NULL) ? 0 : list->value;
 }
 
 void *list_get_elem_at_back(list_t *list)
 {
     if (list == NULL)
-        return NULL;
+        return 0;
     while (list->next != NULL)
         list = list->next;
-    return list_get_elem_at_front(list);
+    return list->value;
 }
 
 void *list_get_elem_at_position(list_t *list, unsigned int position)
 {
     if (list == NULL)
-        return NULL;
-    for (; list != NULL && position; position--)
+        return 0;
+    for (; position && list != NULL; position--)
         list = list->next;
-    return list_get_elem_at_front(list);
+    return (list == NULL) ? 0 : list->value;
 }
 
 void list_dump(list_t *list, value_displayer_t val_disp)

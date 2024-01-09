@@ -13,8 +13,10 @@ unsigned int list_get_size(list_t *list)
 {
     size_t size = 0;
 
-    for (; list != NULL; size++)
+    while (list != NULL) {
+        size += 1;
         list = list->next;
+    }
     return size;
 }
 
@@ -25,7 +27,7 @@ bool list_is_empty(list_t *list)
 
 bool list_add_elem_at_front(list_t **front_ptr, void *elem)
 {
-    list_t *node;
+    list_t *node = NULL;
 
     if (front_ptr == NULL)
         return false;
@@ -42,11 +44,18 @@ bool list_add_elem_at_front(list_t **front_ptr, void *elem)
 
 bool list_add_elem_at_back(list_t **front_ptr, void *elem)
 {
+    list_t **end = front_ptr;
+
     if (front_ptr == NULL)
         return false;
-    while (*front_ptr != NULL)
-        front_ptr = &(*front_ptr)->next;
-    return list_add_elem_at_front(front_ptr, elem);
+    while (*end != NULL)
+        end = &(*end)->next;
+    *end = malloc(sizeof(list_t));
+    **end = (list_t) {
+        .value = elem,
+        .next = NULL,
+    };
+    return true;
 }
 
 bool list_add_elem_at_position(
@@ -56,7 +65,10 @@ bool list_add_elem_at_position(
 {
     if (front_ptr == NULL)
         return false;
-    for (; *front_ptr != NULL && pos; pos--)
+    for (; pos; pos--) {
+        if (*front_ptr == NULL)
+            return false;
         front_ptr = &(*front_ptr)->next;
+    }
     return list_add_elem_at_front(front_ptr, elem);
 }

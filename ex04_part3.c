@@ -28,10 +28,14 @@ bool list_del_elem_at_back(list_t **front_ptr)
         return false;
     while ((*front_ptr)->next != NULL)
         front_ptr = &(*front_ptr)->next;
-    return list_del_elem_at_front(front_ptr);
+    free((*front_ptr)->next);
+    *front_ptr = NULL;
+    return true;
 }
 
-bool list_del_elem_at_position(list_t **front_ptr, unsigned int position)
+bool list_del_elem_at_position(
+    list_t **front_ptr,
+    unsigned int position)
 {
     if (front_ptr == NULL || *front_ptr == NULL)
         return false;
