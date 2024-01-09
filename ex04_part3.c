@@ -28,7 +28,7 @@ bool list_del_elem_at_back(list_t **front_ptr)
         return false;
     while ((*front_ptr)->next != NULL)
         front_ptr = &(*front_ptr)->next;
-    free((*front_ptr)->next);
+    free(*front_ptr);
     *front_ptr = NULL;
     return true;
 }
